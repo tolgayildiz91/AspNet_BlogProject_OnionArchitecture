@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using BP.Application.Models.DTOs.CategoryDTOs;
 using BP.Domain.Entities;
+using BP.Domain.Enums;
 using BP.Domain.Repositories;
 using BP.Infrastructure.RepositoriesConcrete;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,9 +27,13 @@ namespace BP.Application.Services.CategoryService
         ICategoryRepository _categoryRepository;
         IMapper _mapper;
 
-        public Task<List<CategoryListDTO>> AllCategories()
+        public async Task<List<CategoryListDTO>> AllCategories()
         {
-            throw new NotImplementedException();
+
+            
+            var listCategories =  _mapper.Map<List<CategoryListDTO>>(await _categoryRepository.GetAll());
+            return listCategories;
+            
         }
 
         public async Task Create(CategoryCreateDTO categoryDTO)
@@ -42,19 +48,23 @@ namespace BP.Application.Services.CategoryService
             await _categoryRepository.Update(category);
         }
 
-        public Task<CategoryUpdateDTO> GetByID(int id)
+        public async Task<CategoryUpdateDTO> GetByID(int id)
         {
-            throw new NotImplementedException();
+
+            var category = _mapper.Map<CategoryUpdateDTO>(_categoryRepository.GetBy(x => x.Id == id));
+            return category;
+         
         }
 
         public Task<bool> IsCategoryExist(string categoryName)
         {
-            throw new NotImplementedException();
+            return _categoryRepository.Any(x => x.Name == categoryName);
         }
 
-        public Task Remove(int id)
+        public async Task Remove(int id)
         {
-            throw new NotImplementedException();
+            var category = await _categoryRepository.GetBy(x=>x.Id==id);
+            await _categoryRepository.Delete(category);
         }
     }
 }

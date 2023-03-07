@@ -3,6 +3,7 @@ using BP.Domain.Enums;
 using BP.Domain.Repositories;
 using BP.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,11 @@ namespace BP.Infrastructure.RepositoriesConcrete
             //_table.Update(item);
             _dbContext.Entry<T>(item).State = EntityState.Modified;//Güncelleme Yap
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<T>> GetAll()
+        {
+            return await _table.ToListAsync();
         }
     }
 }

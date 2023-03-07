@@ -16,6 +16,9 @@ namespace BP.Application.AutoMapper
         {
             CreateMap<AppUser, RegisterDTO>().ReverseMap();
             CreateMap<Category, CategoryCreateDTO>().ReverseMap();
+            CreateMap<Category, CategoryUpdateDTO>().ReverseMap();
+            CreateMap<Category, CategoryListDTO>().ReverseMap();
+           
 
         }
 

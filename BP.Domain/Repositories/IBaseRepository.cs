@@ -17,6 +17,7 @@ namespace BP.Domain.Repositories
         Task Delete(T item);
         Task<List<T>> GetDefault(Expression<Func<T, bool>> expression);
         Task<T> GetBy(Expression<Func<T, bool>> expression);
+        Task<List<T>> GetAll();
 
         Task<bool> Any(Expression<Func<T, bool>> expression);
 
